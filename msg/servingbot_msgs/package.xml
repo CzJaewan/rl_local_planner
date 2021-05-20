@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>servingbot_msgs</name>
+  <version>0.1.0</version>
+  <description>
+    Message and service types: custom messages and services for Servingbot packages
+  </description>
+  <license>Apache 2.0</license>
+  <author email="bumsol95@gmail.com">Beomsol Park</author>
+  <maintainer email="bumsol95@gmail.com">Beomsol Park</maintainer>
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>std_msgs</depend>
+  <build_depend>message_generation</build_depend>
+  <build_export_depend>message_runtime</build_export_depend>
+  <exec_depend>message_runtime</exec_depend>
+</package>
