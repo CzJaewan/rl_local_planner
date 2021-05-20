@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>sp_bringup</name>
+  <version>0.2.0</version>
+  <description>The sp_bringup package</description>
+
+  <author email="wnsdlqjtm@sysconeng.com">Junyeob Baek</author>
+	<author email="starshirts@naver.com">Minjae Jung</author>
+  <maintainer email="wnsdlqjtm@sysconeng.com">Junyeob Baek</maintainer>
+  
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <depend>roscpp</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>tf</depend>
+  
+  <exec_depend>sp_description</exec_depend>
+  <exec_depend>sp_driver</exec_depend>
+  <exec_depend>sp_navigation</exec_depend>
+  <exec_depend>sp_slam</exec_depend>
+
+  <export>
+  </export>
+</package>

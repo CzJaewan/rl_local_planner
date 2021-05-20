@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>sp_description</name>
+  <version>0.2.0</version>
+  <description>The sp_description package</description>
+
+  <author email="wnsdlqjtm@sysconeng.com">Junyeob Baek</author>
+	<author email="starshirts@naver.com">Minjae Jung</author>
+  <maintainer email="wnsdlqjtm@sysconeng.com">Junyeob Baek</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+	
+	<depend>urdf</depend>
+	<depend>xacro</depend>
+	
+	<exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+</package>

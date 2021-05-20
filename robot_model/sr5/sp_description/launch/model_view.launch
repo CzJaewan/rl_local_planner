@@ -1,0 +1,19 @@
+<launch>
+	<arg name="model" default="$(env ROBOT_MODEL)"/>
+	<arg name="rvizon" default="true"/>
+
+	<arg name="urdf_file" default="$(find xacro)/xacro '$(find sp_description)/urdf/$(arg model)/$(arg model).urdf.xacro'" />
+	<param name="robot_description" command="$(arg urdf_file)" />
+
+	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+		<param name="use_gui" value="false"/>
+		<param name="rate" value="50"/>
+	</node>
+
+	<node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+		<param name="publish_frequency" type="double" value="50.0"/>
+		<param name="tf_prefix" type="string" value="$(env ROS_HOSTNAME)"/>
+	</node>
+
+	<node if="$(arg rvizon)" name="rviz" pkg="rviz" type="rviz" args="-d $(find sp_description)/rviz/$(env ROBOT_MODEL)_model.rviz"/>
+ </launch>

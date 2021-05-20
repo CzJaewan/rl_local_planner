@@ -1,0 +1,31 @@
+<launch>
+
+  <arg name="x_pos" default="0.0"/>
+  <arg name="y_pos" default="0.0"/>
+  <arg name="z_pos" default="0.0"/>
+  <arg name="roll" default="0.0"/>
+  <arg name="pitch" default="0.0"/>
+  <arg name="yaw" default="0.0"/>
+  <arg name="yaw_sq" default="1.5701"/>
+  <arg name="map"  default="sq" doc="opt: sq,i, small_s, big_s, xl_s"/> 
+
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find servingbot_gazebo)/models/i_world.world" if="$(eval map == 'i')" />
+    <arg name="world_name" value="$(find servingbot_gazebo)/models/sq_world.world" if="$(eval map == 'sq')" />
+    <arg name="world_name" value="$(find servingbot_gazebo)/models/big_S_world.world" if="$(eval map == 'big_s')" />
+    <arg name="world_name" value="$(find servingbot_gazebo)/models/xl_s_world.world" if="$(eval map == 'xl_s')" />
+    <arg name="world_name" value="$(find servingbot_gazebo)/models/small_s_world.world" if="$(eval map == 'small_s')" />
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+   <param name="robot_description" command="$(find xacro)/xacro.py $(find servingbot_description)/urdf/servingbot.urdf.xacro" />
+
+   <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model servingbot -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -R $(arg roll) -P $(arg pitch) -Y $(arg yaw) -param robot_description" if="$(eval map != 'sq')"/>
+   <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model servingbot -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -R $(arg roll) -P $(arg pitch) -Y $(arg yaw_sq) -param robot_description" if="$(eval map == 'sq')"/>
+
+</launch>

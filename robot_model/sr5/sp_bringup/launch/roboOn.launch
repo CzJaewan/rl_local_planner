@@ -1,0 +1,4 @@
+<launch>
+	<include file="$(find sp_bringup)/launch/bridge.launch"/>
+	<include file="$(find sp_driver)/launch/$(env ROBOT_MODEL)/$(env ROBOT_MODEL).launch.xml" ns="$(env ROS_HOSTNAME)"/>
+</launch>

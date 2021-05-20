@@ -1,0 +1,13 @@
+<launch>
+  <arg name="multi_robot_name" default=""/>
+  <arg name="set_lidar_frame_id" default="lidar_link"/>
+
+  <include file="$(find servingbot_bringup)/launch/servingbot_core.launch">
+    <arg name="multi_robot_name" value="$(arg multi_robot_name)"/>
+  </include>
+  <include file="$(find servingbot_bringup)/launch/servingbot_lidar.launch">
+    <arg name="set_frame_id" value="$(arg set_lidar_frame_id)"/>
+  </include>
+
+  <node pkg="servingbot_bringup" type="servingbot_diagnostics" name="servingbot_diagnostics" output="screen"/>
+</launch>

@@ -1,0 +1,50 @@
+# Parameters for the PATH FOLLOWING CONTROLLER
+PurePlannerROS:
+
+# Robot Configuration Parameters
+  max_trans_acc:              0.5 #1.0
+  max_rot_acc:                1.7 #1.0
+  max_trans_vel:              0.55 #0.5 
+  min_trans_vel:              0.032
+  max_rot_vel:                0.6 #0.7
+  min_rot_vel:                0.13
+
+  min_in_place_rot_vel:       1.0
+  arriving_distance:          1.2
+
+# Goal Tolerance Parameters
+  yaw_goal_tolerance:         0.05
+  xy_goal_tolerance:          0.15
+  wp_tolerance:               1.0
+  
+# Forward Simulation Parameters
+  sim_time:                   2.5 
+  sim_granularity:            0.025
+  angular_sim_granularity:    0.025
+
+  controller_freq:            15.0
+
+# PID Parameter for Nav
+  p_arrive:                    0.7
+  i_arrive:                    0.0
+  d_arrive:                    0.15
+  p_drive:                     0.75
+  i_drive:                     0.0
+  d_drive:                     1.2
+  p_depart:                    0.7
+  i_depart:                    0.0
+  d_depart:                    0.0
+
+# Collision Avoidance using DWA
+  dwa:                        true
+  dwa_ang_inc:                0.1
+  dwa_lin_dec:                0.1
+  dwa_ang_iter:               4
+  dwa_lin_iter:               3
+
+# Crowded Situation Cntl
+  crowd_max:                  1.5
+  crowd_threshold:            1.0
+  crowd_gain:                 0.3
+  crowd_decay:                0.1   
+  

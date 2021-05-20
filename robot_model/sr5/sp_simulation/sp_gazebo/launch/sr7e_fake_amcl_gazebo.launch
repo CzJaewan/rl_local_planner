@@ -1,0 +1,25 @@
+<launch>
+
+  <param name="/use_sim_time" value="true"/>
+  
+  <!-- Map load -->
+  <arg name="map_file" default="$(find sp_gazebo)/map/i_world.yaml"/>
+  <node name="world_map_server" pkg="map_server" type="map_server" args="$(arg map_file)"></node>
+  
+  <!-- GAZEBO -->
+  <include file="$(find sp_gazebo)/launch/scan_merged_sr7e_gazebo.launch">
+    <arg name="gui" value="false"/>
+    <arg name="x_pos" default="0.0"/>
+    <arg name="y_pos" default="0.0"/>
+    <arg name="z_pos" default="0.30"/>
+  </include>
+
+  <!-- Run navigation -->
+  <include file="$(find sp_navigation)/launch/sr7e_navi.simul.launch.xml">
+    <arg name="loc_way" default="fake"/>
+  </include>
+
+  <!-- Extract robot state -->
+  <node name="robot_state_pub" pkg="sp_driver" type="robotstate_pub.py"></node>
+
+</launch>

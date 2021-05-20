@@ -1,0 +1,21 @@
+global_costmap:
+    global_frame: /map
+#robot_base_frame: base_link
+    robot_base_frame: base_footprint
+#update_frequency: 0.10
+#publish_frequency: 0.1
+    update_frequency: 0.1
+    publish_frequency: 0.1
+    static_map: 
+    
+    transform_tolerance: 0.5
+    plugins:
+    - {name: static_layer,            type: "costmap_2d::StaticLayer"}
+    - {name: obstacle_layer,          type: "costmap_2d::VoxelLayer"}
+    - {name: inflation_layer,         type: "costmap_2d::InflationLayer"}
+
+
+    inflation_layer:
+        inflation_radius: 2.5
+        cost_scaling_factor: 2.0
+

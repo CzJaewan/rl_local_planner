@@ -1,0 +1,66 @@
+<launch>
+
+  <arg name="r1_x_pos" default="8.0"/>
+  <arg name="r1_y_pos" default="0.0"/>
+  <arg name="r1_z_pos" default="0.0"/>
+  <arg name="r1_roll" default="0.0"/>
+  <arg name="r1_pitch" default="0.0"/>
+  <arg name="r1_yaw" default="3.14"/>
+  
+  <arg name="r2_x_pos" default="-8.0"/>
+  <arg name="r2_y_pos" default="0.0"/>
+  <arg name="r2_z_pos" default="0.0"/>
+  <arg name="r2_roll" default="0.0"/>
+  <arg name="r2_pitch" default="0.0"/>
+  <arg name="r2_yaw" default="0.0"/>
+  
+  <arg name="r3_x_pos" default="0.0"/>
+  <arg name="r3_y_pos" default="2.0"/>
+  <arg name="r3_z_pos" default="0.0"/>
+  <arg name="r3_roll" default="0.0"/>
+  <arg name="r3_pitch" default="0.0"/>
+  <arg name="r3_yaw" default="0.0"/>
+  
+  <arg name="robot1"  default="robot_0"/>
+  <arg name="robot2" default="robot_1"/>
+  <arg name="robot3"  default="robot_2"/>
+
+  <arg name="map"  default="empty" doc="opt: empty"/> 
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" default="$(find servingbot_gazebo)/models/lsq_static.world" if="$(eval map == 'empty')" />
+    <arg name="paused" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>
+  </include>
+
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find servingbot_description)/urdf/servingbot_rl2.urdf.xacro" />
+
+  <group ns = "$(arg robot1)">
+
+    <param name="tf_prefix" value="$(arg robot1)" />
+
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg robot1) -x $(arg r1_x_pos) -y $(arg r1_y_pos) -z $(arg r1_z_pos) -R $(arg r1_roll) -P $(arg r1_pitch) -Y $(arg r1_yaw) -param /robot_description" respawn="false" output="screen" />
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="50.0" />
+    </node>
+
+
+  </group>
+
+  <group ns = "$(arg robot2)">
+
+    <param name="tf_prefix" value="$(arg robot2)" />
+
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg robot2) -x $(arg r2_x_pos) -y $(arg r2_y_pos) -z $(arg r2_z_pos) -R $(arg r2_roll) -P $(arg r2_pitch) -Y $(arg r2_yaw) -param /robot_description" respawn="false" output="screen" />
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="50.0" />
+    </node>
+
+  </group>
+
+</launch>

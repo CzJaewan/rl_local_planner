@@ -1,0 +1,20 @@
+map_type: costmap
+
+obstacle_range: 3
+raytrace_range: 3.5
+
+footprint: [[-0.4, -0.4], [-0.4, 0.4], [0.4, 0.4], [0.4, -0.4]]
+#robot_radius: 0.17
+
+inflation_radius: 0.1
+cost_scaling_factor: 1.0
+
+plugins:
+  - {name: global_costmap,       type: "costmap_2d::StaticLayer"}
+  - {name: local_costmap,        type: "costmap_2d::VoxelLayer"}
+  - {name: sonar_costmap,        type: "range_sensor_layer::RangeSensorLayer"}
+  - {name: inflation_layer,        type: "costmap_2d::InflationLayer"}
+
+local_costmap:
+  observation_sources: scan
+  scan: {data_type: LaserScan, topic: scan, marking: true, clearing: true}

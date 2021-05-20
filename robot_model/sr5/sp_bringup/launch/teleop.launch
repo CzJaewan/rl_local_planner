@@ -1,0 +1,12 @@
+<launch>
+	<arg name="ps" default="false"/>
+
+	<include if="$(arg ps)" file="$(find ps4_ros)/launch/ps4.launch">
+		<arg name="scale_lin" value="0.35"/>
+		<arg name="scale_ang" value="0.6"/>
+		<arg name="RID" value="$(env ROS_HOSTNAME)"/>
+	</include>
+
+	<!-- teleop_key -->
+	<node unless="$(arg ps)" pkg="sp_driver" type="teleop_key" name="teleop_keyboard"  output="screen" ns="$(env ROS_HOSTNAME)"/>
+</launch>

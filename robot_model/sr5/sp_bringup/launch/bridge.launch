@@ -1,0 +1,20 @@
+<launch>
+	<!--include file="$(find sp_bringup)/core_src/rosbridge_websocket.launch.xml">
+		<arg name="unregister_timeout" value="10000"/>
+	</include-->
+	<node pkg="master_discovery_fkie" type="master_discovery" name="master_discovery" output="screen">
+		<param name="mcast_group" value="224.0.0.1"/>
+		<param name="send_mcast" value="False"/>
+		<param name="listen_mcast" value="False"/>
+		<rosparam param="static_hosts">[master0,master1,master2,master3,master4,master5,master,master7,master8,VISION_PC]</rosparam>
+	</node>
+
+	<node pkg="master_sync_fkie" type="master_sync" name="master_sync" output="screen">
+		<rosparam param="ignore_topics">['/tf','/rosout','rosout_agg']</rosparam>
+	</node>
+
+	<!--node pkg="sp_driver" type="SimpleBridge.py" name="$(anon simple_bridge)" output="screen" respawn="true">
+		<param name="machine" value="$(env ROS_HOSTNAME)"/>
+	</node-->
+	<!--node pkg="sp_driver" type="network_cleaner.py" name="$(anon network_cleaner)" output="screen"/-->
+</launch>

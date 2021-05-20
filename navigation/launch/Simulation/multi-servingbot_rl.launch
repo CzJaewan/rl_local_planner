@@ -1,0 +1,102 @@
+<launch>
+    <!--  ************** Global Parameters ***************  -->
+    <param name="/use_sim_time" value="true"/>
+    <arg name="controller"  default="mpc" doc="opt: dwa, mpc, pure_pursuit"/> 
+    <arg name="map"  default="empty" doc="opt: empty"/> 
+
+    <arg name="r1_x_pos" default="10.0"/>
+    <arg name="r1_y_pos" default="0.0"/>
+    <arg name="r1_z_pos" default="0.0"/>
+    <arg name="r1_roll" default="0.0"/>
+    <arg name="r1_pitch" default="0.0"/>
+    <arg name="r1_yaw" default="0.0"/>
+
+    <arg name="r2_x_pos" default="-10.0"/>
+    <arg name="r2_y_pos" default="0.0"/>
+    <arg name="r2_z_pos" default="0.0"/>
+    <arg name="r2_roll" default="0.0"/>
+    <arg name="r2_pitch" default="0.0"/>
+    <arg name="r2_yaw" default="3.14"/>
+
+    <arg name="r3_x_pos" default="0.0"/>
+    <arg name="r3_y_pos" default="2.0"/>
+    <arg name="r3_z_pos" default="0.0"/>
+    <arg name="r3_roll" default="0.0"/>
+    <arg name="r3_pitch" default="0.0"/>
+    <arg name="r3_yaw" default="0.0"/>
+
+    <arg name="robot1"  default="robot_0"/>
+    <arg name="robot2" default="robot_1"/>
+
+    <!--  ************** Map Server **************  -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find gazebo_rl_test)/map/simul_map.yaml" output="screen" if="$(eval map == 'empty')">
+        <param name="frame_id" value="/map"/>
+    </node>
+
+    <group ns = "$(arg robot1)">
+        <param name="tf_prefix" value="$(arg robot1)" />
+
+
+
+        <!--  ************** Localization **************  -->
+        <node pkg="amcl" type="amcl" name="amcl" output="screen">
+            <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/2amcl_params.yaml" command="load" />
+            <remap from="map" to="/map"/>
+            <param name="initial_pose_x"            value="$(arg r1_x_pos)"/>
+            <param name="initial_pose_y"            value="$(arg r1_y_pos)"/>
+            <param name="initial_pose_a"            value="$(arg r1_yaw)" if="$(eval map == 'empty')"/>
+            <remap from="/scan" to="$(arg robot1)/scan"/>
+
+            <param name="global_frame_id" value="/map"/>
+            <param name="odom_frame_id" value="$(arg robot1)/odom"/>
+            <param name="base_frame_id" value="$(arg robot1)/base_footprint"/>    
+        </node>
+
+        <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+            <remap from="map" to="/map"/>
+
+            <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/carlike/2costmap_common_params.yaml" command="load" ns="global_costmap" />
+            <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/carlike/2costmap_common_params.yaml" command="load" ns="local_costmap" />
+            <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/carlike/2local_costmap_params.yaml" command="load" />
+            <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/carlike/2global_costmap_params.yaml" command="load" />        
+    
+            <param name="global_costmap/robot_base_frame" value="/$(arg robot1)/base_footprint"/>
+            <param name="local_costmap/robot_base_frame" value="/$(arg robot1)/base_footprint"/>
+        </node>
+
+
+    </group>
+
+    <group ns = "$(arg robot2)">
+        <param name="tf_prefix" value="$(arg robot2)" />
+
+        <!--  ************** Localization **************  -->
+        <node pkg="amcl" type="amcl" name="amcl" output="screen">
+            <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/2amcl_params.yaml" command="load" />
+            <remap from="map" to="/map"/>
+            <param name="initial_pose_x"            value="$(arg r2_x_pos)"/>
+            <param name="initial_pose_y"            value="$(arg r2_y_pos)"/>
+            <param name="initial_pose_a"            value="$(arg r2_yaw)" if="$(eval map == 'empty')"/>
+            <remap from="/scan" to="$(arg robot2)/scan"/>
+
+            <param name="global_frame_id" value="/map"/>
+            <param name="odom_frame_id" value="$(arg robot2)/odom"/>
+            <param name="base_frame_id" value="$(arg robot2)/base_footprint"/>           
+        </node>
+
+        <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+            <remap from="map" to="/map"/>
+            <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/carlike/2costmap_common_params.yaml" command="load" ns="global_costmap" />
+            <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/carlike/2costmap_common_params.yaml" command="load" ns="local_costmap" />
+            <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/carlike/2local_costmap_params.yaml" command="load" />
+            <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/carlike/2global_costmap_params.yaml" command="load" />        
+        
+            <param name="global_costmap/robot_base_frame" value="/$(arg robot2)/base_footprint"/>
+            <param name="local_costmap/robot_base_frame" value="/$(arg robot2)/base_footprint"/>
+
+        </node>
+
+    </group>
+    <!--  ************** Visualisation **************  -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find gazebo_rl_test)/launch/Simulation/params/rviz_multi_navi.rviz"/>
+</launch>

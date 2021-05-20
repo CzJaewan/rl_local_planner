@@ -1,0 +1,6 @@
+<launch>
+	<include file="$(find sp_bringup)/launch/bridge.launch"/>
+	<node pkg="sp_driver" type="SPCoRE" name="spcore" output="screen" ns="$(env ROS_HOSTNAME)"/>
+
+</launch>
+

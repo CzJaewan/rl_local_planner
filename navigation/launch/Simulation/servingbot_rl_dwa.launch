@@ -1,0 +1,66 @@
+<launch>
+
+    <!--  ************** Global Parameters ***************  -->
+    <param name="/use_sim_time" value="true"/>
+    <arg name="controller"  default="dwa" doc="opt: dwa, mpc, pure_pursuit"/> 
+    <arg name="map"  default="empty" doc="opt: empty"/> 
+
+    <arg name="x_pos" default="0.0"/>
+    <arg name="y_pos" default="0.0"/>
+    <arg name="z_pos" default="0.0"/>
+    <arg name="roll" default="0"/>
+    <arg name="pitch" default="0"/>
+    <arg name="yaw" default="0.0"/>
+
+    <!--  ************** servingbot ***************  -->
+
+    <include file="$(find servingbot_bringup)/launch/servingbot_remote.launch" />
+
+    <!--  ************** Map Server **************  -->
+
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find gazebo_rl_test)/map/simul_map.yaml" output="screen" if="$(eval map == 'empty')">
+        <param name="frame_id" value="/map"/>
+    </node>
+
+    <!--  ************** Localization **************  -->
+    
+    <node pkg="amcl" type="amcl" name="amcl" output="screen">
+        <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/3amcl_params.yaml" command="load" />
+        <param name="initial_pose_x"            value="$(arg x_pos)"/>
+        <param name="initial_pose_y"            value="$(arg y_pos)"/>
+        <param name="initial_pose_a"            value="$(arg yaw)" if="$(eval map == 'empty')"/>
+    </node>
+
+    <!--  ************** Navigation ***************  -->   
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+        <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/carlike/2costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/carlike/2costmap_common_params_local.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/carlike/dwa_local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/carlike/2global_costmap_params.yaml" command="load" />        
+        
+	<!-- Global Planner -->
+        <param name="base_global_planner" value="global_planner/GlobalPlanner" />
+        <param name="planner_frequency" value="1.0" />
+        <param name="planner_patience" value="5.0" />
+        <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/global_planner_params.yaml" command="load" />
+
+        <!-- Local Planner -->
+        <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
+        <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/carlike/dwa_local_planner_params.yaml" command="load" />
+
+
+        <!-- Our carlike robot is not able to rotate in place -->
+        <param name="clearing_rotation_allowed" value="false" /> 
+
+    </node>
+    
+    <!--  ************** look a head **************  -->
+    <node name="Look_a_head_Node" pkg="gazebo_rl_test" type="Look_a_head_Node" output="screen">
+        <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/lookahead.yaml" command="load" />
+
+    </node>
+
+
+    <!--  ************** Visualisation **************  -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find gazebo_rl_test)/launch/Simulation/params/rviz_single_rl_navigation.rviz"/>
+</launch>

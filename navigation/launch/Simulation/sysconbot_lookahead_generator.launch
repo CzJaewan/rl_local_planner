@@ -1,0 +1,8 @@
+<launch>
+
+    <!--  ************** look a head **************  -->
+    <node name="Look_a_head_Node" pkg="gazebo_rl_test" type="Look_a_head_Node" output="screen">
+        <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/syscon_lookahead.yaml" command="load" />
+    </node>
+
+</launch>

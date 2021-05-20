@@ -1,0 +1,236 @@
+<?xml version="1.0" ?>
+<robot name="servingbot" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find servingbot_description)/urdf/common_properties.xacro"/>
+  <xacro:include filename="$(find servingbot_description)/urdf/rl_servingbot.gazebo.xacro"/>
+
+  <link name="base_footprint"/>
+
+  <joint name="base_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0.0 0.0 0.2465" rpy="0 0 0"/>
+  </joint>
+
+  <link name="body_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://servingbot_description/meshes/base_plate.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh
+          filename="package://servingbot_description/meshes/base_plate.STL" />
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="-0.0036904 0 0.0025" rpy="0 0 0"/>
+      <mass value="2"/>
+      <inertia ixx="0" ixy="0" ixz="0"
+               iyy="0" iyz="0"
+               izz="0" />
+    </inertial>
+  </link>
+
+  <joint
+    name="body_joint"
+    type="fixed">
+    <origin
+      xyz="0.0039057 0 -0.08"
+      rpy="-6.913E-15 -1.1102E-16 -5.4234E-31" />
+    <parent
+      link="base_link" />
+    <child
+      link="body_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.0070361 -0.0010307 -0.094165"
+        rpy="0 0 0" />
+      <mass
+        value="7" />
+      <inertia
+        ixx="0.114"
+        ixy="3.4187E-05"
+        ixz="-0.0079587"
+        iyy="0.084746"
+        iyz="-0.00069939"
+        izz="0.14914" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://servingbot_description/meshes/body.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://servingbot_description/meshes/body.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="wheel_left_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="wheel_left_link"/>
+    <origin xyz="-0.0010943 0.28875 -0.145" rpy="-2.2643E-16 1.1179E-16 2.2128E-16"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <link name="wheel_left_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://servingbot_description/meshes/left_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh
+          filename="package://servingbot_description/meshes/left_wheel.STL" />
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="3.5" />
+      <inertia ixx="0" ixy="0" ixz="0"
+               iyy="0" iyz="0"
+               izz="0" />
+      </inertial>
+  </link>
+
+  <joint name="wheel_right_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="wheel_right_link"/>
+    <origin xyz="-0.0010943 -0.2675 -0.145" rpy="-5.2266E-18 -5.5914E-16 8.922E-16"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <link name="wheel_right_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://servingbot_description/meshes/right_wheel.STL"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh
+          filename="package://servingbot_description/meshes/right_wheel.STL" />
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 -5.5511E-17 0" />
+      <mass value="3.5" />
+      <inertia ixx="0" ixy="0" ixz="0"
+               iyy="0" iyz="0"
+               izz="0" />
+      </inertial>
+  </link>
+
+  <joint
+    name="lidar_joint"
+    type="fixed">
+    <origin
+      xyz="0.23721 0 0.0453"
+      rpy="0 1.111E-15 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="lidar_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0.0 -0.07 0.37" rpy="0 0 ${-M_PI*0.5}"/>
+  </joint>
+
+  <link name="imu_link"/> 
+
+  <link
+    name="lidar_link">
+    <inertial>
+      <origin
+        xyz="-0.25974 -0.001068 -0.098004"
+        rpy="0 0 3.141592" />
+      <mass
+        value="0.05" />
+      <inertia
+        ixx="6.003E-06"
+        ixy="2.5645E-07"
+        ixz="-2.0674E-06"
+        iyy="8.525E-06"
+        iyz="7.9724E-08"
+        izz="3.7518E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 3.141592" />
+      <geometry>
+        <mesh
+          filename="package://servingbot_description/meshes/lidar.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://servingbot_description/meshes/lidar.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+</robot>

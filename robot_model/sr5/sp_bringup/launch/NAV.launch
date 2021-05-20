@@ -1,0 +1,18 @@
+	<launch>
+	<include file="$(find sp_bringup)/launch/bridge.launch"/>
+	<include file="$(find sp_driver)/launch/$(env ROBOT_MODEL)/$(env ROBOT_MODEL).launch.xml" ns="$(env ROS_HOSTNAME)"/>
+
+	<include file="$(find sp_navigation)/launch/$(env ROBOT_MODEL)_navi.launch.xml" ns="$(env ROS_HOSTNAME)"/>
+	
+	<!--include file="$(find s500p_1)/include/software/cam2_AR_track.launch.xml" ns="$(env ROS_HOSTNAME)"/-->
+	
+	<node pkg="sp_driver" type="WorkActionServer.py" name="WAS" output="screen" ns="$(env ROS_HOSTNAME)">
+		<param name="tf_prefix" value="$(env ROS_HOSTNAME)"/>
+	</node>
+
+	<node pkg="sp_driver" type="TaskRoutinizer.py" name="TARU" output="screen" ns="$(env ROS_HOSTNAME)"/>
+	
+	<node pkg="sp_driver" type="temp_goal.py" name="TEMPGOAL" output="screen" ns="$(env ROS_HOSTNAME)"/>
+ 	
+</launch>
+

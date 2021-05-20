@@ -1,0 +1,74 @@
+<launch>
+  <arg name="x_pos" default="8.0"/>
+  <arg name="y_pos" default="0.0"/>
+  <arg name="z_pos" default="0.0"/>
+  <arg name="yaw" default="3.14"/>
+
+  <arg name="gui" default="true"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find servingbot_gazebo)/models/lsq_no.world"/>
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+<param name="robot_description" command="$(find xacro)/xacro.py $(find sp_description)/urdf/sr7e/sr7e_150_mass.urdf.xacro" />
+
+
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model sr7e -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -Y $(arg yaw) -param robot_description" />
+
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+    <param name="publish_frequency" type="double" value="50.0" />
+  </node>
+
+    <!-- Laser Sensor Filters before Merging-->
+    <!--include file="$(find sp_driver)/launch/laser_filters.launch.xml"/-->
+    <!-- Laser Mergers -->
+    
+    <arg name="angle_increment" default="0.00436332309619"/>
+    <arg name="time_increment" default="0.0000277777780866"/>
+    <arg name="scan_time" default="0.0399999991059"/>
+    
+    <arg name="range_max" default ="20.0" />
+    <arg name="range_min" default ="0.0" />
+    <arg name="angle_max" default ="3.14" />
+    <arg name="angle_min" default ="-3.14" />	
+
+
+    <node pkg="ira_laser_tools" name="laserscan_merger" type="laserscan_multi_merger" output="screen">
+        <param name="destination_frame" value="base_laser_link"/>
+        <param name="cloud_destination_topic" value="cloud"/>
+        <param name="scan_destination_topic" value="scan"/>
+        <param name="laserscan_topics" value ="/scan_1 /scan_2" /> 
+
+        <param name="angle_increment" value="$(arg angle_increment)"/>
+        <param name="time_increment" value="$(arg time_increment)"/>
+        <param name="scan_time" value="$(arg scan_time)"/>
+        
+        <param name="range_max" value ="$(arg range_max)" />
+        <param name="range_min" value ="$(arg range_min)" />
+        <param name="angle_max" value ="$(arg angle_max)" />
+        <param name="angle_min" value ="$(arg angle_min)" />
+    </node>
+
+    <node pkg="ira_laser_tools" name="laserfeature_merger" type="laserscan_multi_merger" output="screen">
+        <param name="destination_frame" value="base_laser_link"/>
+        <param name="cloud_destination_topic" value="cloud_featured"/>
+        <param name="scan_destination_topic" value="reflected"/>
+        <param name="laserscan_topics" value ="/scan_featured_1 /scan_featured_2" /> 
+
+        <param name="angle_increment" value="$(arg angle_increment)"/>
+        <param name="time_increment" value="$(arg time_increment)"/>
+        <param name="scan_time" value="$(arg scan_time)"/>
+        
+        <param name="range_max" value ="$(arg range_max)" />
+        <param name="range_min" value ="$(arg range_min)" />
+        <param name="angle_max" value ="$(arg angle_max)" />
+        <param name="angle_min" value ="$(arg angle_min)" />
+    </node>
+
+
+</launch>

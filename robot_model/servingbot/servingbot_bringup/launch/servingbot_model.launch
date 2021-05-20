@@ -1,0 +1,16 @@
+<launch>
+
+  <include file="$(find servingbot_bringup)/launch/includes/description.launch.xml">
+  </include>
+
+  <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher">
+    <param name="use_gui" value="50.0" />
+    <param name="rate" value="50" />
+  </node>
+
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="50.0" />
+  </node>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find servingbot_description)/rviz/model.rviz"/>
+</launch>

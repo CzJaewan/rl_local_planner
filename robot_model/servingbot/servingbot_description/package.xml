@@ -1,0 +1,26 @@
+<package>
+  <name>servingbot_description</name>
+  <version>0.1.0</version>
+  <description>
+    <p>URDF Description package for servingbot</p>
+    <p>This package contains configuration data, 3D models and launch files
+for servingbot robot</p>
+  </description>
+  <author email="gdh8652@gmail.com">Donghyun Ko</author>
+  <maintainer email="gdh8652@gmail.com">Donghyun Ko</maintainer>
+  <license>BSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roslaunch</build_depend>
+  <run_depend>robot_state_publisher</run_depend>
+  <run_depend>rviz</run_depend>
+  <run_depend>joint_state_publisher</run_depend>
+  <run_depend>gazebo</run_depend>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>urdf</build_depend>
+  <build_depend>xacro</build_depend>
+  <run_depend>urdf</run_depend>
+  <run_depend>xacro</run_depend>
+  <export>
+    <architecture_independent />
+  </export>
+</package>
