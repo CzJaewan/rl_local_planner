@@ -70,6 +70,9 @@ class StageWorld():
         # -----------Service-------------------
         self.reset_stage = rospy.ServiceProxy('reset_positions', Empty)
 
+
+        self.frist_distance = 16
+
         # # Wait until the first callback
         self.speed = None
         self.state = None
@@ -186,6 +189,8 @@ class StageWorld():
         [x, y] = self.get_local_goal()
 
         self.pre_distance = np.sqrt(x ** 2 + y ** 2)
+        self.frist_distance = self.pre_distance
+
         self.distance = copy.deepcopy(self.pre_distance)
 
     def generate_zero_goal_point(self):
@@ -194,6 +199,7 @@ class StageWorld():
         [x, y] = self.get_local_goal()
 
         self.pre_distance = np.sqrt(x ** 2 + y ** 2)
+        self.frist_distance = self.pre_distance
         self.distance = copy.deepcopy(self.pre_distance)
 
     def get_reward_and_terminate(self, t):
@@ -203,28 +209,33 @@ class StageWorld():
         [v, w] = self.get_self_speedGT()
         self.pre_distance = copy.deepcopy(self.distance)
         self.distance = np.sqrt((self.goal_point[0] - x) ** 2 + (self.goal_point[1] - y) ** 2)
-        reward_g = (self.pre_distance - self.distance) * 2.5
+        reward_g = (self.pre_distance - self.distance) * 1.0 #* 10/self.frist_distance 
         reward_c = 0
         reward_w = 0
+        reward_ct = 0
+        reward_t = 0
         result = 0
         is_crash = self.get_crash_state()
 
         if self.distance < self.goal_size:
             terminate = True
-            reward_g = 5
+            reward_g = 15
             result = 'Reach Goal'
 
         if is_crash == 1:
             terminate = True
-            reward_c = -1.
+            reward_c = -15.
             result = 'Crashed'
 
         if self.is_dead == 1:
             terminate = True
-            reward_c = -1.
+            reward_c = -20.
             result = 'Crashed'
 
-        reward = reward_g + reward_c 
+        if np.abs(w) > 1.0:
+            reward_w = -0.1 * np.abs(w)
+	
+        reward = reward_g + reward_c + reward_w + reward_ct + reward_t
 
         if t >= 1000 and (not is_crash or not is_dead) :
             reward = -0.1 

@@ -19,13 +19,11 @@ from collections import deque
 from model.net import QNetwork_1,  QNetwork_2, ValueNetwork, GaussianPolicy
 from stage_world import StageWorld
 from model.sac import SAC
-from model.replay_memory import ReplayMemory
-
 
 parser = argparse.ArgumentParser(description='PyTorch Soft Actor-Critic Args')
 parser.add_argument('--env-name', default="Stage",
                     help='Environment name (default: Stage)')
-parser.add_argument('--policy', default="Gaussian",
+parser.add_argument('--policy', default="Deterministic",
                     help='Policy Type: Gaussian | Deterministic (default: Gaussian)')
 parser.add_argument('--eval', type=bool, default=True,
                     help='Evaluates a policy a policy every 10 episode (default: True)')
@@ -68,8 +66,8 @@ parser.add_argument('--epoch', type=int, default=1,
                     help='Epoch (default: 1)')
 parser.add_argument('--hidden_size', type=int, default=256, metavar='N',
                     help='hidden size (default: 256)')     
-parser.add_argument('--policy_path',  default="single_agent2", 
-                    help='policy_path (default: single_agent)')                    
+parser.add_argument('--policy_path',  default="policy_tddd", 
+                    help='policy_path (default: policy_tddd)')                    
 args = parser.parse_args()
 
 
@@ -211,9 +209,9 @@ if __name__ == '__main__':
         if not os.path.exists(policy_path):
             os.makedirs(policy_path)
 
-        file_policy = policy_path + '/policy_epi_1000.pth'
-        file_critic_1 = policy_path + '/critic_1_epi_1000.pth'
-        file_critic_2 = policy_path + '/critic_2_epi_1000.pth'
+        file_policy = policy_path + '/syscon_6world_policy_epi_12900.pth'
+        file_critic_1 = policy_path + '/syscon_6world_critic_1_epi_12900.pth'
+        file_critic_2 = policy_path + '/syscon_6world_critic_2_epi_12900.pth'
 
         if os.path.exists(file_policy):
             logger.info('###########################################')

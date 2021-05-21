@@ -6,7 +6,7 @@ from torch.nn import functional as F
 import numpy as np
 import socket
 from torch.utils.data.sampler import BatchSampler, SubsetRandomSampler
-from net import GaussianPolicy, QNetwork_1, QNetwork_2
+from net import GaussianPolicy, QNetwork_1, QNetwork_2, DeterministicPolicy
 from utils import soft_update, hard_update
 from torch.optim import Adam
 
@@ -66,7 +66,7 @@ class SAC(object):
         else:
             self.alpha = 0
             self.automatic_entropy_tuning = False
-            #self.policy = DeterministicPolicy(num_frame_obs, num_goal_obs, num_vel_obs, self.action_space.shape[0], args.hidden_size, self.action_space).to(self.device)
+            self.policy = DeterministicPolicy(num_frame_obs, num_goal_obs, num_vel_obs, self.action_space.shape[0], args.hidden_size, self.action_space).to(self.device)
             self.policy_optim = Adam(self.policy.parameters(), lr=args.lr)
 
     def select_action(self, state_list, evaluate=False):

@@ -27,6 +27,7 @@ class Flatten(nn.Module):
 class QNetwork_1(nn.Module):
     def __init__(self, num_frame_obs, num_goal_obs, num_vel_obs, num_actions, hidden_dim):
         super(QNetwork_1, self).__init__()
+
         self.fea_cv1 = nn.Conv1d(in_channels=num_frame_obs, out_channels=32, kernel_size=5, stride=2, padding=1)
         self.fea_cv2 = nn.Conv1d(in_channels=32, out_channels=32, kernel_size=3, stride=2, padding=1)
         self.fc1 = nn.Linear(128*32, 256) # Lidar conv, fc output = 256. it will be next observation full connected layer including goal and velocity
@@ -147,14 +148,20 @@ class GaussianPolicy(nn.Module):
             self.action_bias = torch.FloatTensor(
                 (action_space.high - action_space.low) / 2.)
             
-            scale = [0.5, 1]
-            bias = [0.5, 0]
+            #scale = [0.5, 1]
+            #bias = [0.5, 0]
+            scale = [0.275, 0.6]
+            bias = [0.275, 0]
+            #scale = [0.5, 1]
+            #bias = [0.5, 0]
 
             self.action_scale = torch.FloatTensor(scale)
             self.action_bias = torch.FloatTensor(bias)
 
-            print("self.action_scale: ", self.action_scale)
-            print("self.action_bias: ", self.action_bias)
+            print("self.action_scale")
+            print(self.action_scale)
+            print("self.action_bias")
+            print(self.action_bias)
 
     def forward(self, frame, goal, vel):
         o1 = F.relu(self.fea_cv1(frame))
@@ -202,6 +209,66 @@ class GaussianPolicy(nn.Module):
         self.action_scale = self.action_scale.to(device)
         self.action_bias = self.action_bias.to(device)
         return super(GaussianPolicy, self).to(device)
+
+class DeterministicPolicy(nn.Module):
+    def __init__(self, num_frame_obs, num_goal_obs, num_vel_obs, num_actions, hidden_dim, action_space=None):
+        super(DeterministicPolicy, self).__init__()
+        self.fea_cv1 = nn.Conv1d(in_channels=num_frame_obs, out_channels=32, kernel_size=5, stride=2, padding=1)
+        self.fea_cv2 = nn.Conv1d(in_channels=32, out_channels=32, kernel_size=3, stride=2, padding=1)
+        self.fc1 = nn.Linear(128*32, 256) # Lidar conv, fc output = 256. it will be next observation full connected layer including goal and velocity
+        
+        self.linear1 = nn.Linear(256 + num_goal_obs + num_vel_obs, hidden_dim)
+        self.linear2 = nn.Linear(hidden_dim, hidden_dim)
+
+        self.mean = nn.Linear(hidden_dim, num_actions)
+        self.noise = torch.Tensor(num_actions)
+
+        self.apply(weights_init_)
+
+        # action rescaling
+        if action_space is None:
+            self.action_scale = 1.
+            self.action_bias = 0.
+        else:
+            self.action_scale = torch.FloatTensor(
+                (action_space.high - action_space.low) / 2.)
+            self.action_bias = torch.FloatTensor(
+                (action_space.high + action_space.low) / 2.)
+
+            #scale = [0.5, 1]
+            #bias = [0.5, 0]
+            
+            scale = [0.275, 0.6]
+            bias = [0.275, 0]
+
+            self.action_scale = torch.FloatTensor(scale)
+            self.action_bias = torch.FloatTensor(bias)
+
+
+    def forward(self, frame, goal, vel):
+        o1 = F.relu(self.fea_cv1(frame))
+        o1 = F.relu(self.fea_cv2(o1))
+        o1 = o1.view(o1.shape[0], -1)
+        o1 = F.relu(self.fc1(o1))
+        state = torch.cat([o1, goal, vel], 1) # observation
+
+        x = F.relu(self.linear1(state))
+        x = F.relu(self.linear2(x))
+        mean = torch.tanh(self.mean(x)) * self.action_scale #+ self.action_bias
+        return mean
+
+    def sample(self, frame, goal, vel):
+        mean = self.forward(frame, goal, vel)
+        noise = self.noise.normal_(0., std=0.1)
+        noise = noise.clamp(-0.1, 0.1)
+        action = mean + noise
+        return action, torch.tensor(0.), mean
+
+    def to(self, device):
+        self.action_scale = self.action_scale.to(device)
+        self.action_bias = self.action_bias.to(device)
+        self.noise = self.noise.to(device)
+        return super(DeterministicPolicy, self).to(device)
 
 
 if __name__ == '__main__':

@@ -321,7 +321,7 @@ class StageWorld():
         [x, y] = self.get_local_goal()
         
         self.pre_distance = np.sqrt(x ** 2 + y ** 2)
-        self.pre_distance = self.frist_distance
+        self.frist_distance = self.pre_distance
         self.distance = copy.deepcopy(self.pre_distance)
 
     def generate_goal_point(self):
@@ -330,7 +330,7 @@ class StageWorld():
         [x, y] = self.get_local_goal()
         
         self.pre_distance = np.sqrt(x ** 2 + y ** 2)
-        self.pre_distance = self.frist_distance
+        self.frist_distance = self.pre_distance
         self.distance = copy.deepcopy(self.pre_distance)
 
     def generate_test_goal_point(self):
@@ -349,7 +349,7 @@ class StageWorld():
         self.distance = np.sqrt((self.goal_point[0] - x) ** 2 + (self.goal_point[1] - y) ** 2)
         
 
-        reward_g = (self.pre_distance - self.distance) * 10/self.frist_distance * 2.5
+        reward_g = (self.pre_distance - self.distance) * 1.0 #* 10/self.frist_distance 
         reward_c = 0
         reward_w = 0
         reward_ct = 0
@@ -360,21 +360,24 @@ class StageWorld():
 
         if self.distance < self.goal_size:
             terminate = True
-            reward_g = 20
+            reward_g = 15
             result = 'Reach Goal'
         
         if self.is_collision == 1:
             terminate = True
-            reward_c = -20.
+            reward_c = -15.
             result = 'Crashed'
         
-        if np.abs(w) > 1.00:
+        if self.scan_min < 1.0:
+            reward_ct = -0.02
+
+        if np.abs(w) > 1.0:
             reward_w = -0.1 * np.abs(w)
 	
         #if np.abs(w) > 0.9:
         #print("velocity {} {}".format(v, w))
 
-        if t > 1000:
+        if t > 3000:
             terminate = True
             result = 'Time out'
         

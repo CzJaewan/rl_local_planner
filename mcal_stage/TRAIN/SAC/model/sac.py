@@ -6,7 +6,7 @@ from torch.nn import functional as F
 import numpy as np
 import socket
 from torch.utils.data.sampler import BatchSampler, SubsetRandomSampler
-from net import GaussianPolicy, QNetwork_1, QNetwork_2
+from net import GaussianPolicy, QNetwork_1, QNetwork_2, DeterministicPolicy
 from utils import soft_update, hard_update
 from torch.optim import Adam
 
@@ -26,7 +26,7 @@ logger_ppo.addHandler(ppo_file_handler)
 
 class SAC(object):
     def __init__(self, num_frame_obs, num_goal_obs, num_vel_obs, action_space, args):
-
+        print("SAC INIT")
         self.gamma = args.gamma
         self.tau = args.tau
         self.alpha = args.alpha
@@ -57,16 +57,13 @@ class SAC(object):
                 self.target_entropy = -torch.prod(torch.Tensor(self.action_space_array.shape).to(self.device)).item()
                 self.log_alpha = torch.zeros(1, requires_grad=True, device=self.device)
                 self.alpha_optim = Adam([self.log_alpha], lr=args.lr)
-
             #self.policy = GaussianPolicy(num_frame_obs, num_goal_obs, num_vel_obs, self.action_space_array.shape[0], args.hidden_size, self.action_space_array).to(self.device)
             self.policy = GaussianPolicy(num_frame_obs, num_goal_obs, num_vel_obs, self.action_space.shape[0], args.hidden_size, self.action_space).to(self.device)
-
-            self.policy_optim = Adam(self.policy.parameters(), lr=args.lr)
-
+            self.policy_optim = Adam(policy_typeself.policy.parameters(), lr=args.lr)
         else:
             self.alpha = 0
             self.automatic_entropy_tuning = False
-            #self.policy = DeterministicPolicy(num_frame_obs, num_goal_obs, num_vel_obs, self.action_space.shape[0], args.hidden_size, self.action_space).to(self.device)
+            self.policy = DeterministicPolicy(num_frame_obs, num_goal_obs, num_vel_obs, self.action_space.shape[0], args.hidden_size, self.action_space).to(self.device)
             self.policy_optim = Adam(self.policy.parameters(), lr=args.lr)
 
     def select_action(self, state_list, evaluate=False):
