@@ -131,7 +131,7 @@ class SAC(object):
 
         #self.device = torch.device("cuda" if args.cuda else "cpu")
         #self.device = torch.device("cuda")
-        self.device = torch.device("cuda")
+        self.device = torch.device("cpu")
 
         self.action_space_array = np.array(action_space)
         self.action_space = action_space

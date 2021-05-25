@@ -1,0 +1,36 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/syscon/mcal_ws/devel/include/**",
+        "/home/syscon/catkin_ws/devel/include/**",
+        "/home/syscon/sw_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/syscon/mcal_ws/src/navigation/amcl/include/**",
+        "/home/syscon/catkin_ws/src/core_navigation/objects_perception/costmap_converter/include/**",
+        "/home/syscon/catkin_ws/src/core_navigation/core_planning/forward_path_collision_avoidance/fpca/include/**",
+        "/home/syscon/catkin_ws/src/core_navigation/objects_perception/leg_tracker/include/**",
+        "/home/syscon/catkin_ws/src/core_navigation/objects_perception/objects_detector_2d/include/**",
+        "/home/syscon/catkin_ws/src/core_navigation/objects_perception/objects_predictor_2d/include/**",
+        "/home/syscon/catkin_ws/src/core_navigation/objects_visualize/objects_visualize/include/**",
+        "/home/syscon/catkin_ws/src/core_navigation/objects_perception/obstacle_detector/obstacle_detector/include/**",
+        "/home/syscon/catkin_ws/src/core_navigation/core_planning/rollout_local_planner/include/**",
+        "/home/syscon/catkin_ws/src/core_navigation/objects_visualize/rviz_visual_tools/include/**",
+        "/home/syscon/mcal_ws/src/rl_local_planner/robot_model/servingbot/serving_simuation/servingbot_fake/include/**",
+        "/home/syscon/mcal_ws/src/rl_local_planner/robot_model/servingbot/serving_simuation/servingbot_gazebo/include/**",
+        "/home/syscon/catkin_ws/src/lifelong_slam/slam_toolbox/include/**",
+        "/home/syscon/catkin_ws/src/core_navigation/core_planning/sp3_local_planner/include/**",
+        "/home/syscon/catkin_ws/src/scorpion_localization/sp_localization/include/**",
+        "/home/syscon/catkin_ws/src/core_navigation/core_planning/waypoints_global_path_planner/waypoints_global_path_planner/include/**",
+        "/home/syscon/catkin_ws/src/core_navigation/core_planning/waypoints_global_path_planner/waypoints_visualize/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}

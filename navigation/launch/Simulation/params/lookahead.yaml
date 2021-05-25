@@ -10,7 +10,7 @@ plan_topic: "move_base/GlobalPlanner/plan"
 goal_topic: "move_base_simple/goal"
 amcl_topic: "amcl_pose"
 
-map_frame: "/map"
+map_frame: "map"
 odom_frame: "odom"
 
 lah_point_topic: "lookAhead_point"

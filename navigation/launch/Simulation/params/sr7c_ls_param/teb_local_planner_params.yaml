@@ -1,7 +1,7 @@
 TebLocalPlannerROS:
 
- odom_topic: /R_007/odom
- map_frame: /R_007/odom 
+ odom_topic: R_007/odom
+ map_frame: R_007/odom 
 
  # Trajectory
  meter_scoring: True

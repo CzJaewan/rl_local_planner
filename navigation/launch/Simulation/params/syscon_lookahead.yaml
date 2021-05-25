@@ -5,13 +5,13 @@ controller_freq: 20 # unit: Hz
 
 pathLength: 10.0
 
-odom_topic: "/R_007/odom"
-plan_topic: "/R_007/move_base/GlobalPlanner/plan"
-goal_topic: "/R_007/move_base_simple/goal"
-amcl_topic: "/R_007/amcl_pose"
+odom_topic: "R_007/odom"
+plan_topic: "R_007/move_base/GlobalPlanner/plan"
+goal_topic: "R_007/move_base_simple/goal"
+amcl_topic: "R_007/amcl_pose"
 
 map_frame: "map"
 odom_frame: "R_007/odom"
 
-lah_point_topic: "/R_007/lookAhead_point"
-lah_marker_topic: "/R_007/LookAhead/path_marker"
+lah_point_topic: "R_007/lookAhead_point"
+lah_marker_topic: "R_007/LookAhead/path_marker"

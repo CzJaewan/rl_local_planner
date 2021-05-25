@@ -25,7 +25,7 @@
     <!--  ************** Map Server **************  -->
 
     <node name="map_server" pkg="map_server" type="map_server" args="$(find gazebo_rl_test)/map/lsq_map_2.yaml" output="screen" if="$(eval map == 'empty')">
-        <param name="frame_id" value="/map"/>
+        <param name="frame_id" value="map"/>
     </node>
 
 
@@ -45,7 +45,7 @@
             <remap from="/scan" to="$(arg robot1)/scan"/>
 
             
-            <param name="global_frame_id" value="/map"/>
+            <param name="global_frame_id" value="map"/>
             <param name="odom_frame_id" value="$(arg robot1)/odom"/>
             <param name="base_frame_id" value="$(arg robot1)/base_footprint"/>    
         
@@ -67,8 +67,8 @@
             <param name="planner_patience" value="5.0" />
             <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/global_planner_params.yaml" command="load" />
 
-            <param name="global_costmap/robot_base_frame" value="/$(arg robot1)/base_footprint"/>
-            <param name="local_costmap/robot_base_frame" value="/$(arg robot1)/base_footprint"/>
+            <param name="global_costmap/robot_base_frame" value="$(arg robot1)/base_footprint"/>
+            <param name="local_costmap/robot_base_frame" value="$(arg robot1)/base_footprint"/>
 
             <!-- Local Planner -->
             <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
@@ -89,7 +89,7 @@
             <param name="amcl_topic"            value="/$(arg robot1)/amcl_pose"/>
             <param name="lah_point_topic"       value="/$(arg robot1)/lookAhead_point"/>
             <param name="lah_marker_topic"      value="/$(arg robot1)/LookAhead/path_marker"/>
-            <param name="odom_frame"            value="/$(arg robot1)/odom"/>
+            <param name="odom_frame"            value="$(arg robot1)/odom"/>
 
         </node>
 
@@ -110,7 +110,7 @@
             <param name="initial_pose_a"            value="$(arg r2_yaw)" if="$(eval map == 'empty')"/>
             <remap from="/scan" to="$(arg robot2)/scan"/>
                 
-            <param name="global_frame_id" value="/map"/>
+            <param name="global_frame_id" value="map"/>
             <param name="odom_frame_id" value="$(arg robot2)/odom"/>
             <param name="base_frame_id" value="$(arg robot2)/base_footprint"/>    
         
@@ -130,8 +130,8 @@
             <param name="planner_patience" value="5.0" />
             <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/global_planner_params.yaml" command="load" />
 
-            <param name="global_costmap/robot_base_frame" value="/$(arg robot2)/base_footprint"/>
-            <param name="local_costmap/robot_base_frame" value="/$(arg robot2)/base_footprint"/>
+            <param name="global_costmap/robot_base_frame" value="$(arg robot2)/base_footprint"/>
+            <param name="local_costmap/robot_base_frame" value="$(arg robot2)/base_footprint"/>
 
             <!-- Local Planner -->
             <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
@@ -152,7 +152,7 @@
             <param name="amcl_topic"            value="/$(arg robot2)/amcl_pose"/>
             <param name="lah_point_topic"       value="/$(arg robot2)/lookAhead_point"/>
             <param name="lah_marker_topic"      value="/$(arg robot2)/LookAhead/path_marker"/>
-            <param name="odom_frame"            value="/$(arg robot2)/odom"/>
+            <param name="odom_frame"            value="$(arg robot2)/odom"/>
 
         </node>
 

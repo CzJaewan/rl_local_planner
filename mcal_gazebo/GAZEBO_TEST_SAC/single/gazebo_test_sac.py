@@ -18,9 +18,9 @@ from collections import deque
 from model.utils import soft_update, hard_update
 
 from model.net import QNetwork_1, QNetwork_2, ValueNetwork, GaussianPolicy, DeterministicPolicy
-#from syscon_test_amcl_world import StageWorld
-
-from syscon_gazebo_test_amcl_world_LAH2_hybrid import StageWorld
+#from syscon_gazebo_test_amcl_world import StageWorld
+#from syscon_gazebo_test_amcl_world_LAH import StageWorld
+from syscon_gazebo_test_amcl_world_LAH_hybrid import StageWorld
 from model.sac import SAC
 
 parser = argparse.ArgumentParser(description='PyTorch Soft Actor-Critic Args')
@@ -86,16 +86,17 @@ def run(comm, env, agent, policy_path, args):
     for i_episode in range(args.num_steps):
 
         env.control_vel([0,0])
-        '''
-        while not rospy.is_shutdown():
+        
+	
+	while not rospy.is_shutdown():
             get_goal = env.is_sub_goal
             if get_goal:
                 break
-        '''
-        env.set_gazebo_pose(8.0, 0.0, 3.14)
-        env.set_rviz_pose(8.0, 0.0, 3.14)
 
-        env.send_goal_point()
+        #env.set_gazebo_pose(8.0, 0.0, 3.14)
+        #env.set_rviz_pose(8.0, 0.0, 3.14)
+
+        #env.send_goal_point()
         
         #env.send_goal_point2()
 

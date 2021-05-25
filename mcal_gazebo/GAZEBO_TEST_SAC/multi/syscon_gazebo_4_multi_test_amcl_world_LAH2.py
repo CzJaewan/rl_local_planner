@@ -150,7 +150,7 @@ class StageWorld():
     def send_goal_point(self):
         goal_data = PoseStamped()
 
-        goal_data.header.frame_id = "/map"
+        goal_data.header.frame_id = "map"
         goal_data.pose.position.x = self.Goal_data[3][0]
         goal_data.pose.position.y = self.Goal_data[3][1]
         goal_data.pose.position.z = 0

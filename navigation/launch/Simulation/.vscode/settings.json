@@ -1,0 +1,8 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/syscon/mcal_ws/devel/lib/python2.7/dist-packages",
+        "/home/syscon/catkin_ws/devel/lib/python2.7/dist-packages",
+        "/home/syscon/sw_ws/devel/lib/python2.7/dist-packages",
+        "/opt/ros/melodic/lib/python2.7/dist-packages"
+    ]
+}

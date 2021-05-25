@@ -30,7 +30,7 @@
 
     <!--  ************** Map Server **************  -->
     <node name="map_server" pkg="map_server" type="map_server" args="$(find gazebo_rl_test)/map/simul_map.yaml" output="screen" if="$(eval map == 'empty')">
-        <param name="frame_id" value="/map"/>
+        <param name="frame_id" value="map"/>
     </node>
 
     <group ns = "$(arg robot1)">
@@ -43,9 +43,9 @@
             <param name="initial_pose_x"            value="$(arg r1_x_pos)"/>
             <param name="initial_pose_y"            value="$(arg r1_y_pos)"/>
             <param name="initial_pose_a"            value="$(arg r1_yaw)" if="$(eval map == 'empty')"/>
-            <remap from="/scan" to="$(arg robot1)/scan"/>
+            <remap from="scan" to="$(arg robot1)/scan"/>
 
-            <param name="global_frame_id" value="/map"/>
+            <param name="global_frame_id" value="map"/>
             <param name="odom_frame_id" value="$(arg robot1)/odom"/>
             <param name="base_frame_id" value="$(arg robot1)/base_footprint"/>    
         </node>
@@ -59,8 +59,8 @@
             <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/carlike/2global_costmap_params.yaml" command="load" />        
             
        
-            <param name="global_costmap/robot_base_frame" value="/$(arg robot1)/base_footprint"/>
-            <param name="local_costmap/robot_base_frame" value="/$(arg robot1)/base_footprint"/>
+            <param name="global_costmap/robot_base_frame" value="$(arg robot1)/base_footprint"/>
+            <param name="local_costmap/robot_base_frame" value="$(arg robot1)/base_footprint"/>
 
             <!-- Global Planner -->
             <param name="base_global_planner" value="global_planner/GlobalPlanner" />
@@ -88,9 +88,9 @@
             <param name="initial_pose_x"            value="$(arg r2_x_pos)"/>
             <param name="initial_pose_y"            value="$(arg r2_y_pos)"/>
             <param name="initial_pose_a"            value="$(arg r2_yaw)" if="$(eval map == 'empty')"/>
-            <remap from="/scan" to="$(arg robot2)/scan"/>
+            <remap from="scan" to="$(arg robot2)/scan"/>
 
-            <param name="global_frame_id" value="/map"/>
+            <param name="global_frame_id" value="map"/>
             <param name="odom_frame_id" value="$(arg robot2)/odom"/>
             <param name="base_frame_id" value="$(arg robot2)/base_footprint"/>    
         </node>
@@ -103,8 +103,8 @@
             <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/carlike/2global_costmap_params.yaml" command="load" />        
             
 
-            <param name="global_costmap/robot_base_frame" value="/$(arg robot2)/base_footprint"/>
-            <param name="local_costmap/robot_base_frame" value="/$(arg robot2)/base_footprint"/>
+            <param name="global_costmap/robot_base_frame" value="$(arg robot2)/base_footprint"/>
+            <param name="local_costmap/robot_base_frame" value="$(arg robot2)/base_footprint"/>
 
             <!-- Global Planner -->
             <param name="base_global_planner" value="global_planner/GlobalPlanner" />

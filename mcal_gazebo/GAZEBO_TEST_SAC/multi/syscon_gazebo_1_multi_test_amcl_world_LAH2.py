@@ -131,11 +131,11 @@ class StageWorld():
 
         while self.scan is None or self.speed is None or self.state is None\
                 or self.speed_GT is None or self.state_GT is None:
-            print(self.scan)
-            print(self.speed)
-            print(self.state)
-            print(self.speed_GT)
-            print(self.state_GT)
+            #print(self.scan)
+            #print(self.speed)
+            #print(self.state)
+            #print(self.speed_GT)
+            #print(self.state_GT)
             pass
 
         rospy.sleep(1.)
@@ -147,7 +147,7 @@ class StageWorld():
     def send_goal_point(self):
         goal_data = PoseStamped()
 
-        goal_data.header.frame_id = "/map"
+        goal_data.header.frame_id = "map"
         goal_data.pose.position.x = self.Goal_data[self.index][0]
         goal_data.pose.position.y = self.Goal_data[self.index][1]
         goal_data.pose.position.z = 0

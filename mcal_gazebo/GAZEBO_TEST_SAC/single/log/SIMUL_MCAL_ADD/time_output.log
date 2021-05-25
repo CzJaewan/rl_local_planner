@@ -1,0 +1,15 @@
+2021-05-25 14:48:41,410 - INFO - start_logging
+2021-05-25 14:49:35,839 - INFO - start_logging
+2021-05-25 14:49:59,228 - INFO - Env: 0, Episode: 1, time :14.761000000, start_time: 270.931000000, end_time: 285.692000000
+2021-05-25 14:50:15,719 - INFO - start_logging
+2021-05-25 14:50:17,891 - INFO - Env: 0, Episode: 1, time :0.2000000, start_time: 304.341000000, end_time: 304.343000000
+2021-05-25 14:59:25,859 - INFO - start_logging
+2021-05-25 14:59:42,364 - INFO - Env: 0, Episode: 1, time :8.660000000, start_time: 225.815000000, end_time: 234.475000000
+2021-05-25 15:00:02,918 - INFO - start_logging
+2021-05-25 15:00:06,941 - INFO - Env: 0, Episode: 1, time :0.3000000, start_time: 259.35000000, end_time: 259.38000000
+2021-05-25 15:00:24,902 - INFO - start_logging
+2021-05-25 15:17:57,948 - INFO - start_logging
+2021-05-25 15:18:25,413 - INFO - Env: 0, Episode: 1, time :21.510000000, start_time: 1137.791000000, end_time: 1159.301000000
+2021-05-25 15:39:48,799 - INFO - start_logging
+2021-05-25 15:46:47,215 - INFO - start_logging
+2021-05-25 15:47:03,194 - INFO - Env: 0, Episode: 1, time :11.95000000, start_time: 702.427000000, end_time: 713.522000000

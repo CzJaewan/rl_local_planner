@@ -18,7 +18,7 @@
     <!--  ************** Map Server **************  -->
 
     <node name="map_server" pkg="map_server" type="map_server" args="$(find gazebo_rl_test)/map/simul_map.yaml" output="screen" if="$(eval map == 'empty')">
-        <param name="frame_id" value="/map"/>
+        <param name="frame_id" value="map"/>
     </node>
 
     <!--  ************** Localization **************  -->

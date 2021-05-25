@@ -15,7 +15,7 @@
 
     <!--  ************** Map Server **************  -->
     <node name="map_server" pkg="map_server" type="map_server" args="$(find gazebo_rl_test)/map/simul_map.yaml" output="screen" if="$(eval map == 'empty')">
-        <param name="frame_id" value="/map"/>
+        <param name="frame_id" value="map"/>
     </node>
 
     <group ns = "$(arg robot1)">
@@ -24,27 +24,27 @@
         <!--  ************** Localization **************  -->
         <node pkg="amcl" type="amcl" name="amcl" output="screen">
             <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/2amcl_params.yaml" command="load" />
-            <remap from="map" to="/map"/>
+            <remap from="map" to="map"/>
             <param name="initial_pose_x"            value="$(arg r1_x_pos)"/>
             <param name="initial_pose_y"            value="$(arg r1_y_pos)"/>
             <param name="initial_pose_a"            value="$(arg r1_yaw)" if="$(eval map == 'empty')"/>
-            <remap from="/scan" to="$(arg robot1)/scan"/>
+            <remap from="/scan" to="$(arg robot1)scan"/>
 
-            <param name="global_frame_id" value="/map"/>
+            <param name="global_frame_id" value="map"/>
             <param name="odom_frame_id" value="$(arg robot1)/odom"/>
             <param name="base_frame_id" value="$(arg robot1)/base_footprint"/>    
         </node>
 
         <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-            <remap from="map" to="/map"/>
+            <remap from="map" to="map"/>
 
             <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/carlike/2costmap_common_params.yaml" command="load" ns="global_costmap" />
             <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/carlike/2costmap_common_params.yaml" command="load" ns="local_costmap" />
             <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/carlike/2local_costmap_params.yaml" command="load" />
             <rosparam file="$(find gazebo_rl_test)/launch/Simulation/params/carlike/2global_costmap_params.yaml" command="load" />        
 
-            <param name="global_costmap/robot_base_frame" value="/$(arg robot1)/base_footprint"/>
-            <param name="local_costmap/robot_base_frame" value="/$(arg robot1)/base_footprint"/>
+            <param name="global_costmap/robot_base_frame" value="$(arg robot1)/base_footprint"/>
+            <param name="local_costmap/robot_base_frame" value="$(arg robot1)/base_footprint"/>
 
         </node>
 

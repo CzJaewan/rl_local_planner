@@ -1,0 +1,14 @@
+2021-05-25 16:52:00,350 - INFO - start_logging
+2021-05-25 16:56:44,360 - INFO - start_logging
+2021-05-25 16:56:44,380 - INFO - start_logging
+2021-05-25 16:59:21,413 - INFO - start_logging
+2021-05-25 16:59:21,419 - INFO - start_logging
+2021-05-25 17:00:21,828 - INFO - Env: 0, Goal: (001.5 , 001.3), Episode: 1, steps: 6249, Reward: -651.55, Distance: 10.66, Result: Crashed
+2021-05-25 17:01:42,339 - INFO - start_logging
+2021-05-25 17:01:42,347 - INFO - start_logging
+2021-05-25 17:01:54,610 - INFO - Env: 1, Goal: (000.0 , 000.0), Episode: 1, steps: 3842, Reward: -405.41, Distance: 08.48, Result: Crashed
+2021-05-25 17:02:44,091 - INFO - start_logging
+2021-05-25 17:02:44,099 - INFO - start_logging
+2021-05-25 17:03:35,844 - INFO - start_logging
+2021-05-25 17:03:35,854 - INFO - start_logging
+2021-05-25 17:03:46,648 - INFO - Env: 1, Goal: (000.0 , 000.0), Episode: 1, steps: 3337, Reward: -360.70, Distance: 10.80, Result: Crashed
