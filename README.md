@@ -7,7 +7,8 @@
 - To navigation on the complex environment, the Deep Reinforcement Learning can be attractive method better than classical methods. `rl_local_planner` inherits MRCA(Multi-robot collision avidance) methodology, which is based on  PPO(Proximal Policy Optimization and Stage simulation. In our case, we adopt PPO as state-of-art Model-Free algorithm and trained on the physical simulation to be considered with real world properties. The training time are decreased by replacing with off-policy. The off-policy could be more sample efficient because of multi agents environment.
 - The `rl_local_planner` is already tested on real logistic robot and ported the ROS but not local planner planner. For practical usages, `rl_local_planner` included the global_planner and selected the sub goal concept as look ahead, called MCAL(Mobile robot Collision Avoidance Learning)  similar with Hybrid-MRCA.
 
-[![Video Label](http://img.youtube.com/vi/ACG4TMenJDs/0.jpg)](https://www.youtube.com/watch?v=ACG4TMenJDs) ,mcal
+
+[![Video Label](http://img.youtube.com/vi/ACG4TMenJDs/0.jpg)](https://www.youtube.com/watch?v=ACG4TMenJDs) 
 
 # Requirement
 
