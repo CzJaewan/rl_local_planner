@@ -1,4 +1,4 @@
-# Mobile-robot Collision Avoidance Learning 정리
+# Mobile-robot Collision Avoidance Learning
 
 # Overview
 
@@ -229,4 +229,4 @@ mpiexec -np 1 python gazebo_4_multi_test_sac.py
 
 ### References:
 
-[dCollection 디지털 학술정보 유통시스템](http://snut.dcollection.net/srch/srchDetail/200000372623?ajax=false&start=0&query=%28ins_code%3A211034%29+AND++%2B%28%28all%3A%EC%B5%9C%EC%9E%AC%EC%99%84%29%29&sortDir=desc&pageSize=10&searchKeyWord1=%EC%B5%9C%EC%9E%AC%EC%99%84&searchWhere1=all&searchTotalCount=0&navigationSize=10&searchText=%5B%EC%A0%84%EC%B2%B4%3A%3Cspan+class%3D%22point1%22%3E%EC%B5%9C%EC%9E%AC%EC%99%84%3C%2Fspan%3E%5D&pageNum=1&rows=10&itemTypeCode=all&insCode=211034&searthTotalPage=0&sortField=score)
+[A study on dynamic object avoidance driving based on Reinforcement learning using mobile robot](http://snut.dcollection.net/srch/srchDetail/200000372623?ajax=false&start=0&query=%28ins_code%3A211034%29+AND++%2B%28%28all%3A%EC%B5%9C%EC%9E%AC%EC%99%84%29%29&sortDir=desc&pageSize=10&searchKeyWord1=%EC%B5%9C%EC%9E%AC%EC%99%84&searchWhere1=all&searchTotalCount=0&navigationSize=10&searchText=%5B%EC%A0%84%EC%B2%B4%3A%3Cspan+class%3D%22point1%22%3E%EC%B5%9C%EC%9E%AC%EC%99%84%3C%2Fspan%3E%5D&pageNum=1&rows=10&itemTypeCode=all&insCode=211034&searthTotalPage=0&sortField=score)
